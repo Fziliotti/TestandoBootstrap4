@@ -23,6 +23,18 @@ h5 {
     padding-top: 15%;
 }
 
+
+#header_inicio{
+    background-image: url('img/header_1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 0.8em 0;
+    
+}
+
+
+
 .card {
     font-size: 1em;
     overflow: hidden;
