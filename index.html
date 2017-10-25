@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>KanbaTech</title>
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="estilo.css" rel="stylesheet">
+	<script src="js/javascript.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" >
+
+        $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+                $("#ibge").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+                        $("#ibge").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                                $("#ibge").val(dados.ibge);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+    </script>
+
+
+	<!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
+	<!-- ALERTA: Respond.js não funciona se você visualizar uma página file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+	<body>
+		<!-- HEADER -->
+		<header>
+			<nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md navbar-fixed-top  ">
+				<div class="container">
+					<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<a class="navbar-brand " href="#">KanbaTech</a>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item active">
+								<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Link</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link disabled" href="#">Disabled</a>
+							</li>
+						</ul>
+						<form class="form-inline my-2 my-lg-0">
+							<input class="form-control mr-sm-2" type="text" placeholder="Search">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+
+			<!-- APRESENTACAO -->
+			<div style="height: auto; background-color: #565656;"  class="container-fluid">
+				<div class="container text-center ">
+					<h1 id="frase_dinamica" class="typewrite" data-period="2000" data-type='[ "Bem vindo ao KanbaTech", "Eu sou fácil.", "Eu posso aumentar sua produtividade.", "Vem comigo!" ]'>
+						<span class="wrap"></span>
+					</h1>
+				</div> 
+			</div> 
+			<!-- </APRESENTACAO> -->
+		</header>
+		<!-- /HEADER -->
+
+		
+
+
+		<div class="cotainer-fluid">
+			<!-- CONTEUDO SISTEMA -->
+			<div class="container">
+				<div style="margin-top: 4em;" class="row">
+
+					<!-- TO DO -->
+					<div class="bloco_01 col-md-4">
+						<div style="text-align: center;" class="titulo_01"><h1>TO DO</h1></div>
+						<hr>
+						<div style="text-align: justify;" class="conteudo_01">
+
+							<ul class="list-group">
+								<li class="list-group-item justify-content-between">
+									<h5>Linguagem C</h5>
+									<span class="badge badge-default badge-pill">Começar</span>
+								</li>
+								<li class="list-group-item justify-content-between">
+									<h5>Linguagem php</h5>
+									<span class="badge badge-default badge-pill">Começar</span>
+								</li>
+								<li class="list-group-item justify-content-between">
+									<h5>Linguagem Java</h5>
+									<span class="badge badge-default badge-pill">Começar</span>
+								</li>
+								<li class="list-group-item justify-content-between">
+									<button class="button btn btn-success " >Inserir</button>
+								</li>
+							</ul>
+
+						</div>
+					</div>
+					<!-- /TO DO -->
+
+
+					<!-- DOING -->
+					<div class="bloco_01 col-md-4">
+						<div style="text-align: center;" class="titulo_01"><h1>DOING</h1></div>
+						<hr>
+						<div style="text-align: justify;" class="conteudo_01">
+
+							<ul class="list-group">
+								<li class="list-group-item justify-content-between">
+									<h5>Linguagem HTML5</h5>
+									<span class="badge badge-warning badge-pill">14%</span>
+								</li>
+								<li class="list-group-item justify-content-between">
+									<h5>Linguagem CSS3</h5>
+									<span class="badge badge-danger badge-pill">3%</span>
+								</li>
+								<li class="list-group-item justify-content-between">
+									<h5>Linguagem Jquery</h5>
+									<span class="badge badge-danger badge-pill">1%</span>
+								</li>
+							</ul>
+
+						</div>
+					</div>
+					<!-- /DOING -->
+
+					<!-- DONE -->
+					<div class="bloco_01 col-md-4">
+						<div style="text-align: center;" class="titulo_01"><h1>DONE</h1></div>
+						<hr>
+						<div style="text-align: justify;" class="conteudo_01">
+
+							<ul class="list-group">
+								<li class="list-group-item justify-content-between">
+									<h5>Lógica da Programação</h5>
+									<span class="badge badge-success badge-pill">100%</span>
+								</li>
+								<li class="list-group-item justify-content-between">
+									<h5>Cálculo 1</h5>
+									<span class="badge badge-success badge-pill">100%</span>
+								</li>
+								<li class="list-group-item justify-content-between">
+									<h5>Empreendedorismo</h5>
+									<span class="badge badge-success badge-pill">100%</span>
+								</li>
+								<li class="list-group-item justify-content-between">
+									<h5>Introdução a Computação</h5>
+									<span class="badge badge-success badge-pill">100%</span>
+								</li>
+							</ul>
+
+						</div>
+					</div>
+					<!-- /DONE -->
+				</div><!-- /row -->
+			</div><!-- /container -->
+		</div><!-- /container -->
+
+
+
+		<div class="container-fluid">
+			<div id="formulario_ajax" class="row text-center">
+				<div class="col-md-12 alinharMeio padding30 ">
+
+					<form method="get" action=".">
+				        <label>Cep:
+				        <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" /></label><br />
+				        <label>Rua:
+				        <input name="rua" type="text" id="rua" size="60" /></label><br />
+				        <label>Bairro:
+				        <input name="bairro" type="text" id="bairro" size="40" /></label><br />
+				        <label>Cidade:
+				        <input name="cidade" type="text" id="cidade" size="40" /></label><br />
+				        <label>Estado:
+				        <input name="uf" type="text" id="uf" size="2" /></label><br />
+				        <label>IBGE:
+				        <input name="ibge" type="text" id="ibge" size="8" /></label><br />
+				    </form>
+
+
+				</div>
+			</div>
+		</div>
+
+		<footer style=" color: white; background-color: black;" class="container-fuild">
+			<div class="container">
+				<div style="padding-top: 5%; padding-bottom: 5%;" class="row">
+					<div class="col-md-4">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</div>
+
+					<div class="col-md-4">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</div>
+
+					<div class="col-md-4">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</div>
+				</div>
+			</div><!--/container-->
+
+			
+
+
+		</footer>
+
+
+
+		
+
+		<!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+	</html>
